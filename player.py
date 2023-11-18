@@ -1,9 +1,11 @@
+import random
+
 class Player:
 
 	def __init__(self, symbol):
 		self.symbol = symbol
 
-	def play(self, field, board):
+	def move(self, field, gameboard):
 		"""
 		field: int between 0 and 9
 		board: GameBoard
@@ -14,4 +16,13 @@ class Player:
 
 		row = field // 3
 		col = field % 3
-		board.board[row][col] = self.symbol
+		if gameboard.board[row][col] != self.symbol:
+			gameboard.board[row][col] = self.symbol
+		else:
+			raise Exception("Field already occupied... Try another field.")
+		
+		return (row, col)
+
+	def automatic_move(self, board):
+		field = random.randint(0, 8)
+		return self.move(field, board)

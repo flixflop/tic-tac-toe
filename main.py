@@ -1,16 +1,17 @@
 from board import GameBoard
 from player import Player
+from tictactoe import TicTacToe
 
 def main():
 
 	p1 = Player('x')
-	g = GameBoard()
-
-	p1.play(0, g)
-	p1.play(1, g)
-	p1.play(2, g)
-	print(g.board)
-	print(g._has_winner())
+	p2 = Player('o')
+	b = GameBoard()
+	ttt = TicTacToe(b, p1, p2)
+	# p1.make_turn(0, b)
+	# p1.make_turn(1, b)
+	# p1.make_turn(2, b)
+	ttt.play()
 
 if __name__ == "__main__":
 
