@@ -22,16 +22,29 @@ class TicTacToe:
 		print(greeting)
 		winner = False
 		while not winner:
-			self._gb._render_board()
-			field = int(input("Player 1 - Choose your field\n>>> "))
-			row, col = self.p1.move(field, self._gb)
-			self._gb._render_board()
+			self._gb.render_board()
+			successful_move = False
+			while not successful_move:
+				field = int(input("Player 1 - Choose your field\n>>> "))
+				try:
+					row, col = self.p1.move(field, self._gb)
+					successful_move = True
+				except ValueError:
+					print("Field already occupied... Try another field.")
+			self._gb.render_board()
 			winner = self._winning_move(row, col, self.p1.symbol)
 			if winner:
 				print("Player 1 won")
 				break
-			row, col = self.p2.automatic_move(self._gb)
-			self._gb._render_board()
+			
+			successful_move = False
+			while not successful_move:
+				try:		
+					row, col = self.p2.automatic_move(self._gb)
+					successful_move = True
+				except ValueError:
+					print("Field already occupied... Try another field.")
+			self._gb.render_board()
 			winner = self._winning_move(row, col, self.p2.symbol)
 			if winner:
 				print("Player 2 won")

@@ -4,13 +4,14 @@ from tictactoe import TicTacToe
 
 def main():
 
+	# gb = GameBoard(size=5)
+	# print(gb.board)
+
 	p1 = Player('x')
 	p2 = Player('o')
-	b = GameBoard()
+	b = GameBoard(size=4)
 	ttt = TicTacToe(b, p1, p2)
-	# p1.make_turn(0, b)
-	# p1.make_turn(1, b)
-	# p1.make_turn(2, b)
+
 	ttt.play()
 
 if __name__ == "__main__":
