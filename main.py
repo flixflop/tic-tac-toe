@@ -14,8 +14,11 @@ def main():
 
 	# ttt.play()
 	w, h = 600, 600
+	size = 5
 	win = Window(w, h)
-	gb = GuiGameBoard(3, 20, 20, 50, 50, win)
+	x1, y1 = 20, 20
+	cell_x, cell_y = (w - x1 * 2) / size, (h - y1 * 2) / size
+	gb = GuiGameBoard(size, x1, y1, cell_x, cell_y, win)
 	win.wait_for_close()
 
 

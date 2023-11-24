@@ -1,66 +1,77 @@
-from tkinter import Tk, BOTH, Canvas
+from tkinter import Tk, BOTH, Canvas, Button, Label
 
 class ConsoleGameBoard:
 
-	def __init__(self, size=3):
-		self.size = size
-		self.board = []
-		self._create_board()
+    def __init__(self, size=3):
+        self.size = size
+        self.board = []
+        self._create_board()
 
-	def _create_board(self):
-		for i in range(self.size):
-			row = list(range(1 + i * self.size, self.size+1 + i * self.size))
-			self.board.append(row)
-			
-	def render_board(self):
-		for row in self.board:
-			print(row)
+    def _create_board(self):
+        for i in range(self.size):
+            row = list(range(1 + i * self.size, self.size+1 + i * self.size))
+            self.board.append(row)
+            
+    def render_board(self):
+        for row in self.board:
+            print(row)
 
 class GuiGameBoard:
 
-	def __init__(self, size, x1, y1, cellsize_x, cellsize_y, win):
-		self.size = size
-		self.board = []		
-		self._x1 = x1
-		self._y1 = y1
-		self._cellsize_x = cellsize_x
-		self._cellsize_y = cellsize_y
-		self._win = win
+    def __init__(self, size, x1, y1, cellsize_x, cellsize_y, win):
+        self.size = size
+        self.board = []		
+        self._x1 = x1
+        self._y1 = y1
+        self._cellsize_x = cellsize_x
+        self._cellsize_y = cellsize_y
+        self._win = win
 
-		self._create_board()
+        self._create_board()
 
-	def _create_board(self):
-		for i in range(self.size):
-			row = []
-			for j in range(self.size):
-				row.append(Cell(self._win))
-			self.board.append(row)
+    def _create_board(self):
+        for i in range(self.size):
+            row = []
+            for j in range(self.size):
+                row.append(Cell(self._win))
+            self.board.append(row)
 
-		for i in range(self.size):
-			for j in range(self.size):
-				c = self.board[i][j]
-				self._draw_cell(i, j)
+        for i in range(self.size):
+            for j in range(self.size):
+                c = self.board[i][j]
+                self._draw_cell(i, j)
 
-	def _draw_cell(self, i, j):
-		
-		if self._win is None:
-			return
-		
-		top_left_x = self._x1 + i * self._cellsize_x
-		top_left_y = self._y1 + j * self._cellsize_y
-		bottom_right_x = self._x1 + (i + 1) * self._cellsize_x 
-		bottom_right_y = self._y1 + (j + 1) * self._cellsize_y
+    def _draw_cell(self, i, j):
+        
+        if self._win is None:
+            return
+        
+        top_left_x = self._x1 + j * self._cellsize_x
+        top_left_y = self._y1 + i * self._cellsize_y
+        bottom_right_x = self._x1 + (j + 1) * self._cellsize_x 
+        bottom_right_y = self._y1 + (i + 1) * self._cellsize_y
+        
+        self.board[i][j].draw(top_left_x, top_left_y, bottom_right_x, bottom_right_y)
+        
+        btn = Button(text=f"I am at", bg="red")
+        btn.place(x=top_left_x, y=top_left_y, width=self._cellsize_x, height=self._cellsize_y)
 
-		self.board[i][j].draw(top_left_x, top_left_y, bottom_right_x, bottom_right_y)
-		self._animate()
+        def handle_click(event):
+            print(f"The button ({i}, {j}) was clicked")
 
-	def _animate(self):
 
-		if self._win is None:
-			return
+        btn.bind("<Button-1>", handle_click)
 
-		self._win.redraw()
-		#sleep(0.0)
+        
+        self._animate()
+
+    def _animate(self):
+
+        if self._win is None:
+            return
+
+        self._win.redraw()
+        #sleep(0.0)
 
 class Window:
 
@@ -180,9 +191,9 @@ class Cell:
 
 class Point:
 
-	def __init__(self, x, y):
-		self.x = x
-		self.y = y
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
 
 
 class Line:
